@@ -3,8 +3,7 @@ import './App.css';
 import React, { Component } from 'react';
 import { Content } from './components/Content';
 import { AddAlbum } from './components/AddAlbum';
-// import { Albums } from './components/Albums';
-// import { AlbumItems } from './components/AlbumItems';
+import { EditAlbum } from './components/EditAlbum';
 
 //Imports For Bootstrap and Bootsrap NavBar and Routing
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,9 +25,8 @@ class App extends Component {
           <br />
           <Routes>
             <Route path='/' element={<Content />} exact />
-            <Route exact path='/AddAlbum' element={<AddAlbum />} />
-            {/* <Route exact path='/Albums' element={<Albums />} />
-            <Route exact path='/AlbumItems' element={<AlbumItems />} /> */}
+            <Route path='/AddAlbum' element={<AddAlbum />} />
+            <Route path='/albums/:id' element={<EditAlbum />} />
           </Routes>
         </div>
       </Router>

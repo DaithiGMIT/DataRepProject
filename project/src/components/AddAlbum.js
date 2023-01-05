@@ -11,12 +11,16 @@ export class AddAlbum extends React.Component {
         this.onChangeAlbumName = this.onChangeAlbumName.bind(this);
         this.onChangeAlbumArt = this.onChangeAlbumArt.bind(this);
         this.onChangeAlbumArtist = this.onChangeAlbumArtist.bind(this);
+        this.onChangeYear = this.onChangeYear.bind(this);
+        this.onChangeRating = this.onChangeRating.bind(this);
 
         //create a state that will take the data entered
         this.state = {
             name: '',
             artURL: '',
-            artist: ''
+            artist: '',
+            year: 0,
+            rating: 0
         }
     }
 
@@ -27,9 +31,11 @@ export class AddAlbum extends React.Component {
         console.log(`${this.state.name},${this.state.artURL},${this.state.artist}`);
 
         const album = {
-            name: '',
-            artURL: '',
-            artist: ''
+            name: this.state.name,
+            artist: this.state.artist,
+            artURL: this.state.artURL,
+            year: this.state.year,
+            rating: this.state.rating
 
         }
 
@@ -39,9 +45,12 @@ export class AddAlbum extends React.Component {
         this.setState({
             name: '',
             artURL: '',
-            artist: ''
+            artist: '',
+            year: 0,
+            rating: 0
         })
     }
+    
     //title change event
     onChangeAlbumName(e) {
         this.setState({
@@ -58,6 +67,16 @@ export class AddAlbum extends React.Component {
     onChangeAlbumArt(e) {
         this.setState({
             artURL: e.target.value
+        })
+    }
+    onChangeYear(e) {
+        this.setState({
+            year: e.target.value
+        })
+    }
+    onChangeRating(e) {
+        this.setState({
+            rating: e.target.value
         })
     }
 
@@ -92,11 +111,27 @@ export class AddAlbum extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Add Book Author: </label>
+                        <label>Add Artist Name: </label>
                         <input type="text"
                             className="form-control"
                             value={this.state.artist}
                             onChange={this.onChangeAlbumArtist}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Add Release Year: </label>
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.year}
+                            onChange={this.onChangeYear}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Add Personal Rating, 10 Max: </label>
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.rating}
+                            onChange={this.onChangeRating}
                         />
                     </div>
 

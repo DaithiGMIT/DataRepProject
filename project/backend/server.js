@@ -21,12 +21,12 @@ async function main() {
 const albumSchema = new mongoose.Schema({
     name: String,
     artist: String,
-    artUrl: String,
+    artURL: String,
     year: Number,
     rating: Number
 });
 
-const albumModel = mongoose.model('myAlbums', albumSchema);
+const albumModel = mongoose.model('albums', albumSchema);
 
 
 //Code taken form lab sheet
@@ -54,7 +54,7 @@ app.post('/api/Albums', (req, res) => {
     albumModel.create({
         name: req.body.name,
         artist: req.body.artist,
-        artUrl: req.body.artUrl,
+        artURL: req.body.artURL,
         year: req.body.year,
         rating: req.body.rating
     })
@@ -64,8 +64,6 @@ app.post('/api/Albums', (req, res) => {
 //app getters
 app.get("/api/albums", (req, res) => {
     albumModel.find((error, data) => {
-
-        console.log(error);
 
         res.json(data);
     })
@@ -78,6 +76,25 @@ app.get('/api/albums/:id', (req, res) => {
         res.json(data);
     })
 })
+
+app.put('/api/albums/:id', (req, res)=>{
+    console.log("Update: "+req.params.id);
+  
+    albumModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
+      (error,data)=>{
+        res.send(data);
+      })
+  })
+
+  app.delete('/api/albums/:id',(req, res)=>{
+    console.log('Deleting: '+req.params.id);
+    albumModel.findByIdAndDelete({_id:req.params.id},(error,data)=>{
+      if(error){
+        res.status(500).send(error);
+      }
+      res.status(200).send(data);
+    })
+  })
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
