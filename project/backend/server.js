@@ -26,7 +26,7 @@ const albumSchema = new mongoose.Schema({
     rating: Number
 });
 
-const albumModel = mongoose.model('myAlbums', albumSchema);
+const albumModel = mongoose.model('albums', albumSchema);
 
 
 //Code taken form lab sheet
