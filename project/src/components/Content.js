@@ -9,28 +9,30 @@ export class Content extends Component {
 
     constructor() {
         super();
-        //All Data for the class is stored in the state
         //initialises a default empty state
         this.state = {
-          albums: []
+            albums: []
         }
-      }
-
+    }
+    //when component loads recieves the albums datafrom the address and binds it to the empty albums array
     componentDidMount() {
         axios.get('http://localhost:4000/api/albums')
             .then((response) => {
-                this.setState({ albums:response.data});
+                this.setState({ albums: response.data });
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
 
+    //Then Passes the Albums array to the album page and calls it
     render() {
         return (
-            <div>
-                <h1>Component For Main Content</h1>
-                <Albums albums={this.state.albums}></Albums>
+            <div calssName='contentMain'>
+                <h1>Albums</h1>
+                <div className='cardDisplay'>
+                    <Albums albums={this.state.albums}></Albums>
+                </div>
             </div>
         );
     }

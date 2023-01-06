@@ -3,6 +3,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+//Very similar to the add Album Page but instead of loading all fields empty it loads a page specific to the selected albums Id
+//The page is then populated with the current data of the album
+//The data can then be edited and submitted to change the album on the albums page and the mongoDB
+
 export function EditAlbum() {
     let { id } = useParams();
     const [name, setName] = useState('');
@@ -25,7 +29,7 @@ export function EditAlbum() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        
         const editAlbum = {
             name: name,
             artist: artist,

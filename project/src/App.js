@@ -1,4 +1,4 @@
-//Imports For Components
+//Imports For Components Needed for Routing
 import './App.css';
 import React, { Component } from 'react';
 import { Content } from './components/Content';
@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 class App extends Component {
   render() {
     return (
+      // Create a Nav Bar at the top of the page to link between the main content page and the add album
       <Router>
         <div className="App">
           <Navbar bg="primary" variant="dark">
@@ -23,6 +24,7 @@ class App extends Component {
             </Nav>
           </Navbar>
           <br />
+          {/* Also Declare Routes Needed for navagating between pages */}
           <Routes>
             <Route path='/' element={<Content />} exact />
             <Route path='/AddAlbum' element={<AddAlbum />} />

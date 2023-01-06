@@ -12,12 +12,17 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 main().catch(err => console.log(err));
 
+// Serve the static files from the React app
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
 //mongoose database
 async function main() {
     await mongoose.connect('mongodb+srv://admin:admin@cluster0.s9dxiuk.mongodb.net/?retryWrites=true&w=majority');
 }
 
-//create scheme for the data
+//create schemea for the album data
 const albumSchema = new mongoose.Schema({
     name: String,
     artist: String,
@@ -26,6 +31,7 @@ const albumSchema = new mongoose.Schema({
     rating: Number
 });
 
+//create a model from the schemea and the database name
 const albumModel = mongoose.model('albums', albumSchema);
 
 
@@ -42,12 +48,12 @@ app.use(function (req, res, next) {
 });
 
 //APP USERS
-//parse application/x-www-form-urlencoded
 //app.use called everytime not just in the method
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+//Poster tp send Album Data
 app.post('/api/Albums', (req, res) => {
     console.log(req.body);
 
@@ -61,7 +67,7 @@ app.post('/api/Albums', (req, res) => {
     res.send("Data Recieved")
 })
 
-//app getters
+//Getter to recieve the Json data
 app.get("/api/albums", (req, res) => {
     albumModel.find((error, data) => {
 
@@ -69,7 +75,7 @@ app.get("/api/albums", (req, res) => {
     })
 })
 
-
+//Getter to reciev an individual album objects data
 app.get('/api/albums/:id', (req, res) => {
     console.log(req.params.id)
     albumModel.findById(req.params.id, (error, data) => {
@@ -77,25 +83,33 @@ app.get('/api/albums/:id', (req, res) => {
     })
 })
 
-app.put('/api/albums/:id', (req, res)=>{
-    console.log("Update: "+req.params.id);
-  
-    albumModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
-      (error,data)=>{
-        res.send(data);
-      })
-  })
+//Putter to set an individual items data specified by it's id and update it
+app.put('/api/albums/:id', (req, res) => {
+    console.log("Update: " + req.params.id);
 
-  app.delete('/api/albums/:id',(req, res)=>{
-    console.log('Deleting: '+req.params.id);
-    albumModel.findByIdAndDelete({_id:req.params.id},(error,data)=>{
-      if(error){
-        res.status(500).send(error);
-      }
-      res.status(200).send(data);
+    albumModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
+        (error, data) => {
+            res.send(data);
+        })
+})
+
+//When called will delete the album specified by it's id
+app.delete('/api/albums/:id', (req, res) => {
+    console.log('Deleting: ' + req.params.id);
+    albumModel.findByIdAndDelete({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            res.status(500).send(error);
+        }
+        res.status(200).send(data);
     })
-  })
+})
 
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../build/index.html'));
+    });
+    
+//Has the app listen at the declared port number
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

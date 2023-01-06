@@ -6,7 +6,7 @@ export class AddAlbum extends React.Component {
     constructor() {
         //call the parent constructor
         super();
-        //bind each of the events to this event
+        //bind each of the events to this
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onChangeAlbumName = this.onChangeAlbumName.bind(this);
         this.onChangeAlbumArt = this.onChangeAlbumArt.bind(this);
@@ -29,7 +29,7 @@ export class AddAlbum extends React.Component {
         e.preventDefault();
         //display the states values on error
         console.log(`${this.state.name},${this.state.artURL},${this.state.artist}`);
-
+        //Bind given details
         const album = {
             name: this.state.name,
             artist: this.state.artist,
@@ -38,7 +38,7 @@ export class AddAlbum extends React.Component {
             rating: this.state.rating
 
         }
-
+        //Proceed to add the new data to the database
         axios.post('http://localhost:4000/api/albums', album)
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err.data))
@@ -51,29 +51,31 @@ export class AddAlbum extends React.Component {
         })
     }
     
-    //title change event
+    //name change event
     onChangeAlbumName(e) {
         this.setState({
             name: e.target.value
         })
     }
-    //author change event
+    //artist change event
     onChangeAlbumArtist(e) {
         this.setState({
             artist: e.target.value
         })
     }
-    //cover change event
+    //album art url change event
     onChangeAlbumArt(e) {
         this.setState({
             artURL: e.target.value
         })
     }
+    //Year change event
     onChangeYear(e) {
         this.setState({
             year: e.target.value
         })
     }
+    //rating change event
     onChangeRating(e) {
         this.setState({
             rating: e.target.value
@@ -86,13 +88,10 @@ export class AddAlbum extends React.Component {
 
         return (
             <div>
-                <h1>Hello from Create Component.</h1>
+                <h1>Please Enter New Albums Details.</h1>
 
-                {/* create form with a submission button link it to the handleSubmit function
-                    for each element that you wish to add we add a new div with its own event
-                    for author title and cover to be changed when it is typed in
-                    submission button can then be clicked for submitting the book
-                */}
+                {/* using a form we intake the needed information and pass it on once the submit has been clicked*/}
+                
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label>Add Album Name: </label>
